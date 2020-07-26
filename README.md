@@ -1,2 +1,2 @@
 # gavans.work
-source code to build my personal website
+Source code to build my personal website (https://gavans.work).

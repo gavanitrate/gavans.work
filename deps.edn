@@ -1,0 +1,8 @@
+{:src     ["src"]
+ :deps    {hiccup          {:mvn/version "1.0.5"}
+           deraen/sass4clj {:mvn/version "0.5.1"}
+           hawk            {:mvn/version "0.2.11"}}
+ :aliases {:dev {:extra-paths ["dev"]
+                 :main-opts   ["-i" "dev/user.clj"]}}
+ }
+
