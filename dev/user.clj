@@ -5,7 +5,7 @@
 
 ;; automatically start dev build
 (def ssg
-  (ssg.main/start
+  (ssg.main/start!
     {:profile        :dev
      :sass-options   {:source-paths ["src/styles/"]
                       :target-path  "public/"}
@@ -17,9 +17,16 @@
 
   ssg
 
-  (ssg.main/rebuild ssg)
+  (ssg.main/rebuild
+    ssg
+    {:profile        :prod
+     :sass-options   {:source-paths ["src/styles/"]
+                      :target-path  "public/"}
+     :markup-options {:source-paths ["src/markup/"]
+                      :target-path  "public/"}
+     })
 
-  (ssg.main/stop ssg)
+  (ssg.main/stop! ssg)
 
   (sh "wt")
 

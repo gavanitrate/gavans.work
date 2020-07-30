@@ -1,9 +1,8 @@
 (ns ssg.main
   (:require
     [clojure.spec.alpha :as s]
-    [hawk.core :as hawk]
     [sass4clj.api :as sass]
-    [ssg.hiccup]))
+    [ssg.hiccup :as hiccup]))
 
 (defn build-dev-config [{:keys [sass-options
                                 markup-options]
@@ -12,7 +11,8 @@
                (assoc :source-map true
                       :output-style :expanded
                       :auto true))
-   :hiccup markup-options})
+   :hiccup (-> markup-options
+               (assoc :auto true))})
 
 (defn build-prod-config [{:keys [sass-options
                                  markup-options]
@@ -21,7 +21,8 @@
                (assoc :source-map false
                       :output-style :compressed
                       :auto false))
-   :hiccup markup-options})
+   :hiccup (-> markup-options
+               (assoc :auto false))})
 
 (defn build-context [{:keys [profile]
                       :as   options}]
@@ -42,8 +43,8 @@
                         sass/build))))
 
 (defn start-hiccup-service [context]
-  (let [watcher (hawk/watch! [(ssg.hiccup/build-watcher context)])]
-    (-> context (assoc ::hiccup watcher))))
+  (-> context
+      (assoc ::hiccup (-> context :configuration :hiccup hiccup/build))))
 
 
 ;; specs for config arguments
@@ -51,10 +52,10 @@
 (s/def ::options (s/keys :req-un [::profile]))
 
 ;; starts the build service
-(defn start [{:keys [profile
-                     sass-options
-                     markup-options]
-              :as   options}]
+(defn start! [{:keys [profile
+                      sass-options
+                      markup-options]
+               :as   options}]
   (if-not (s/valid? ::options options)
     (s/explain-out (s/explain-data ::options options))
     (-> options
@@ -62,7 +63,7 @@
         start-sass-service
         start-hiccup-service)))
 
-(defn stop [context]
+(defn stop! [context]
   (some-> context ::sass sass/stop)
   (some-> context ::hiccup hawk/stop!)
   (-> context
@@ -72,7 +73,7 @@
   ([context] (rebuild context nil))
   ([context options]
    (-> context
-       stop
+       stop!
        (rebuild-context options)
        start-sass-service
        start-hiccup-service)))
