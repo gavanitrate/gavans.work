@@ -43,6 +43,9 @@
     (hawk/watch! [(build-watcher options)])
     (build-hiccup! options)))
 
+(defn stop [watcher]
+  (hawk/stop! watcher))
+
 
 (comment
 

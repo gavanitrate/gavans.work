@@ -65,7 +65,7 @@
 
 (defn stop! [context]
   (some-> context ::sass sass/stop)
-  (some-> context ::hiccup hawk/stop!)
+  (some-> context ::hiccup hiccup/stop)
   (-> context
       (dissoc ::sass ::hiccup)))
 
