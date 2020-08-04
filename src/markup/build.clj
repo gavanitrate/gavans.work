@@ -30,7 +30,7 @@
      and a watcher service to rebuild when changes to the source
      code are detected - all written in pure Clojure.
      "
-     [:a {:href "test.com"} "You can find the source code here."]
+     [:a {:href "https://github.com/gavanitrate/gavans.work"} "You can find the source code here."]
      ]
     ]])
 
