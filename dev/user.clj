@@ -3,17 +3,17 @@
     [clojure.java.shell :refer [sh]]
     [ssg.main]))
 
-;; automatically start dev build
-(def ssg
-  (ssg.main/start!
-    {:profile        :dev
-     :sass-options   {:source-paths ["src/styles/"]
-                      :target-path  "public/"}
-     :markup-options {:source-paths ["src/markup/"]
-                      :target-path  "public/"}
-     }))
 
 (comment
+
+  (def ssg
+    (ssg.main/start!
+      {:profile        :prod
+       :sass-options   {:source-paths ["src/styles/"]
+                        :target-path  "public/"}
+       :markup-options {:source-paths ["src/markup/"]
+                        :target-path  "public/"}
+       }))
 
   ssg
 
