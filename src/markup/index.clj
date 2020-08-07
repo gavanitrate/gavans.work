@@ -1,7 +1,8 @@
 (ns markup.index
   (:require
     [views.components.page :refer [page header footer]]
-    [views.components.icons :as i]))
+    [views.components.contact :refer [links]]
+    ))
 
 (defn blurb []
   [:section.blurb
@@ -34,26 +35,6 @@
       "This website was built using a custom built static site generator.
       "
       [:a {:href "build.html"} "Learn more about it here."]]]]])
-
-(defn links []
-  [:section.solid.links
-   [:div.content
-    [:div.row
-     [:a.invisible
-      {:href   "https://github.com/gavanitrate"
-       :target "_blank"}
-      [:div.icon (i/svg-icon i/github)]]
-
-     [:a.invisible
-      {:href   "https://www.linkedin.com/in/gavansingh/"
-       :target "_blank"}
-      [:div.icon (i/svg-icon i/linkedin)]]
-
-     [:a.invisible
-      {:href   "mailto:gav@gavans.work"
-       :target "_blank"}
-      [:div.icon (i/svg-icon i/email)]]
-     ]]])
 
 
 (defn content []
